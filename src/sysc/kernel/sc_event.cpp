@@ -101,7 +101,10 @@ sc_event::notify()
         return;
     }
     cancel();
-    trigger();
+#pragma omp critical
+	{
+		trigger();
+	}
 }
 
 void

@@ -480,28 +480,28 @@ sc_simcontext::crunch( bool once )
 	{
 
 	    // execute method processes
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		m_runnable->toggle_methods();
-		sc_method_handle method_h = pop_runnable_method();
-		std::vector<sc_method_handle> vect_method;
-		int count = 0;
-		while (method_h != 0) {
-			vect_method.push_back(method_h);
-			count++;
-			method_h = pop_runnable_method();
-		}
+/////////////////////Exceute method process on multiple cores ///////////////////////////////////////////////////////////////////////////////
+	//	m_runnable->toggle_methods();
+	//	sc_method_handle method_h = pop_runnable_method();
+	//	std::vector<sc_method_handle> vect_method;
+	//	int count = 0;
+	//	while (method_h != 0) {
+	//		vect_method.push_back(method_h);
+	//		count++;
+	//		method_h = pop_runnable_method();
+	//	}
 
- #pragma omp parallel for
-		for (int i = 0; i < vect_method.size(); i++) {
-			//std::cout << "thread num in kernel : " << omp_get_thread_num() << std::endl;
-			empty_eval_phase = false;
-			if (!vect_method[i]->run_process()) {
-				//goto out;
-			}
-		}
+ //#pragma omp parallel for
+	//	for (int i = 0; i < vect_method.size(); i++) {
+	//		//std::cout << "thread num in kernel : " << omp_get_thread_num() << std::endl;
+	//		empty_eval_phase = false;
+	//		if (!vect_method[i]->run_process()) {
+	//			//goto out;
+	//		}
+	//	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	   /* m_runnable->toggle_methods();
+	    m_runnable->toggle_methods();
 	    sc_method_handle method_h = pop_runnable_method();
 	    while( method_h != 0 ) {
 		empty_eval_phase = false;
@@ -510,7 +510,7 @@ sc_simcontext::crunch( bool once )
 		    goto out;
 		}
 		method_h = pop_runnable_method();
-	    }*/
+	    }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	    // execute (c)thread processes
 

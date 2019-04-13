@@ -339,9 +339,13 @@ inline
 void
 sc_prim_channel::request_update()
 {
-    if( ! m_update_next_p ) {
-	m_registry->request_update( *this );
-    }
+#pragma omp critical
+	{
+		if (!m_update_next_p) {
+			m_registry->request_update(*this);
+		}
+	}
+   
 }
 
 // request the update method from external to the simulator (to be executed 
